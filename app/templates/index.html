@@ -1,0 +1,63 @@
+<style>
+    
+    .elem{
+        border: 9px solid rgba(28,110,164,0.56);
+        border-radius: 21px;
+        background-color:#ffaa00; 
+         }
+
+    .elem{display: flex; flex-direction:row;}
+</style>
+
+
+Выключение 
+<hr>
+
+<div class="row">
+    <div class="elem">
+        <button onclick="off(0)" class="elem3">
+            <img src="" height="60px"  > 
+            ShutDown now 
+        </button>
+    </div>
+
+    <div class="elem1 ">
+    
+
+        <button onclick="off(5)" style="background-image: ;">
+            <img src="" height="60px"  >
+            ShutDown +5
+        </button>
+    
+    </div>
+    <div class="elem">
+
+        <button onclick="off(10)" style="background-color:#ffaa00 ;">
+            <img src="" height="60px"  >
+            ShutDown +10 
+        </button>
+    
+    </div>
+    <div class="elem3">
+    
+
+        <a href="#" onclick="off(15)"  >
+            <img src="/static" height="60px"  >
+            ShutDown +15 
+        </a>
+
+
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function off(t) {
+        fetch("/api/off/"+t)
+
+    }
+
+
+
+</script>

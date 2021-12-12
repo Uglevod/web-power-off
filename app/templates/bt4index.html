@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/bt4/css/bootstrap.min.css">
+    <title>Server Yogger. Power managment</title>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Yoggers server PM</a>
+            <button id='timer' type="button" class="btn btn-outline-danger"></button>
+            <a href="/api/csh">
+                <button type="button" class="btn btn-lg m-2 btn-warning">Cancel shutdown</button>
+            </a>
+            <a href='/log' target="_blank">
+                    <button type="button" class="btn btn-lg m-2 btn-info  m3" onclick="_off(0)">Log</button>
+            </a>
+        </nav>
+         
+    </div>
+    <div class="container">
+        <div class="row mx-auto">
+            <div class="col p-5 mx-auto">
+                <a href='/api/off/0'>
+                    <button type="button" class="btn btn-lg m-2 btn-primary btn-danger m3" onclick="_off(0)">Off now</button>
+                </a>
+                <a href='/api/off/5'>
+                    <button type="button" class="btn btn-lg m-2 btn-secondary btn-warning" onclick="_off(5)">Off +5 </button>
+                </a>
+                <a href='/api/off/10'>
+                    <button type="button" class="btn btn-lg m-2 btn-success btn-warning" onclick="_off(10)">Off +10</button>
+                </a>
+            </div>
+            <div class="col p-5 mx-auto">
+                <a href='/api/off/15'>
+                    <button type="button" class="btn btn-lg m-2   btn-success" onclick="_off(15)">Off +15</button>
+                </a>
+                <a href='/api/off/20'>
+                    <button type="button" class="btn btn-lg m-2   btn-success" onclick="_off(20)">Off +20</button>
+                </a>
+                <a href='/api/off/40'>
+                    <button type="button" class="btn btn-lg m-2   btn-success" onclick="_off(40)">Off +40</button>
+                </a>
+            </div>
+            <div class="col p-5 mx-auto">
+                <a href='/api/off/60' onclick="_off(180)">
+                    <button type="button" class="btn btn-lg m-2   btn-primary" onclick="_off(60)">Off +60</button>
+                </a>
+                <a href='/api/off/120' onclick="_off(120)">
+                    <button type="button" class="btn btn-lg m-2   btn-primary" onclick="_off(120)">Off +120</button>
+                </a>
+                <a href='/api/off/180' onclick="_off(180)">
+                    <button type="button" class="btn btn-lg m-2  btn-primary" onclick="_off(180)">Off +180</button>
+                </a>
+            </div>
+        </div>
+        <!--
+        <div class="row mx-auto">
+            <div class="col p-5">
+               <a href='/api/csh'> 
+                  <button type="button" class="btn btn-lg m-2 btn-dark" onclick="csh()">Cancel Shutdown</button>
+               </a>
+            </div>
+        </div>
+-->
+        <div class="row mx-auto">
+            <div class="col p-5">
+                <a href='/api/rb'>
+                    <button type="button" class="btn btn-lg m-2 btn-dark" onclick="_rb()">ReBoot</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    var countDownDate = new Date("{{ttt}}").getTime();
+    var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("timer").innerHTML = days + "d " + hours + "h " +
+            minutes + "m " + seconds + "s ";
+
+        //if (d===null or d===undefined) {document.getElementById("timer").innerHTML =""}
+        //console.log(d)
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timer").innerHTML = "Server is shutdown";
+        }
+    }, 1000);
+    </script>
+    <script type="text/javascript">
+    function off(t) {
+        fetch("/api/off/" + t)
+
+    }
+
+    function rb() {
+
+
+        const Http = new XMLHttpRequest();
+        const url = 'http://192.168.43.150:100/api/rb';
+        Http.open("GET", url);
+        Http.send();
+
+        Http.onreadystatechange = (e) => {
+            console.log(Http.responseText)
+        }
+
+        window.location.href = 'http://192.168.43.150:100/api/rb';
+
+        window.location.assign("http://192.168.43.150:100/api/rb");
+
+        fetch("/api/rb")
+
+    }
+
+    function csh() {
+        fetch("/api/csh")
+
+    }
+    </script>
+
+
+
+    <!-- Дополнительный JavaScript; выберите один из двух! -->
+    <!-- Вариант 1: пакет jQuery и Bootstrap (включает Popper) -->
+    <script src="/static/bt4/jquery/jquery.slim.min.js"></script>
+    <script src="/static/bt4/js/bootstrap.bundle.min.js"></script>
+    <!-- Вариант 2: Отдельные JS для Popper и Bootstrap -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>
