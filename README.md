@@ -1,7 +1,7 @@
 # poweroff
 Simple web interface to local server on ubuntu (flask-mongo)
 
-Простейшая реализация 
+Простейшая реализация. 
 это первый подход к данной теме 
 т.к. развить и сделать более безопасным 
 можно - добавить (для выполнения команд shutdown и reboot) 
